@@ -67,4 +67,19 @@ router.post("/login", async (req, res, next) => {
 	}
 })
 
+router.get("/logout", async (req, res, next) => {
+	try {
+		// deletes the session on the server-side, so the user is no longer authenticated
+		req.session.destroy((err) => {
+			if (err) {
+				next(err)
+			} else {
+				res.status(204).end()
+			}
+		})
+	} catch (err) {
+		next(err)
+	}
+})
+
 module.exports = router

@@ -14,6 +14,11 @@ server.use(session({
 	resave: false, //avoids creating sessions that haven't changed
 	saveUninitialized: false, // GDPR laws against setting cookies automatically
 	secret: "keep it secret, keep it safe", // used to cryptographically sign the cookie
+	// store the session data in the database rather than in memory
+	store: new KnexSessionStore({
+		knex: db, // configured instance of knex
+		createtable: true, // if the table does not exist, it will create it automatically
+	}),
 }))
 
 server.use(usersRouter)
